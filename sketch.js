@@ -7,6 +7,9 @@ const optimizer = tf.train.sgd(learningRate);
 let xs = [];
 let ys = [];
 
+let x_vals = [];
+let y_vals = [];
+
 let m, b;
 
 function setup() {
@@ -20,6 +23,9 @@ function setup() {
 
 
 function draw() {
+    const ys = tf.tensor1d(y_vals);
+    optimizer.minimize(() => loss(predict(xs), ys));
+    
     background(0);
     
     stroke(255);
@@ -36,8 +42,8 @@ function draw() {
 function mousePressed() {
     let x = map(mouseX, 0, width, 0, 1);
     let y = map(mouseY, 0, height, 0, 1);
-    xs.push(x);
-    ys.push(y);
+    x_vals.push(x);
+    y_vals.push(y);
 }
 
 function predict(x) {
